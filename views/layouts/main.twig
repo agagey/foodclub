@@ -1,0 +1,61 @@
+{{   void(this.beginPage()) }}<!DOCTYPE html>
+<html class="sb-init" lang="{{ app.language }}">
+<head>
+
+    <meta charset="{{ app.charset }}">
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+    {{ html.csrfMetaTags | raw }}
+    <title>{{ html.encode(this.title) }}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- CSS Files -->
+    {{   void(this.head) }}
+
+    <!-- csrf -->
+    {{ void(html.csrfMetaTags) | raw }}
+
+    <!-- JS Files -->
+    <script src="/assets/js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/assets/js/main.js"></script>
+</head>
+
+
+<body>{{   void(this.beginBody()) }}
+
+    <div id="page-wrapper">
+
+        <div id="page-header" class="bg-gradient-6">
+          <div id="header-nav-right">
+              <a href="/logout" style="color:#FFF; margin-top:-5px; display:block;">Выход</a>
+          </div>
+        </div>
+
+        <div style="height: 1680px;  background-color:#FFF !important;" id="page-sidebar">
+            <div style="height: 1680px;" class="scroll-sidebar">
+
+                <ul class="sf-js-enabled sf-arrows" id="sidebar-menu">
+                    {% if user.getCurUserRole == 'admin' %}
+                        {{ void(this.render('/manager/menu/admin')) | raw }}
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        <div id="page-content-wrapper">
+            <div style="min-height: 1680px;" id="page-content">                
+                <div class="container">
+
+                    {{ content | raw}}
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {{   void(this.endBody()) }}
+</body>
+</html>
+{{   void(this.endPage()) }}
+ 

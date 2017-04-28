@@ -1,0 +1,58 @@
+<div class="site-index">
+
+    <div class="body-content">
+
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8 col-sm-6 col-xs-6">
+                        <h3 class="create-btn-title">Список документов</h3>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6" onclick="window.location.href='/create'">
+                        <button class="btn btn-success">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Новый документ
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 doc-list">
+                        <ul class="tree">
+                            {% for doc in docs %}
+
+                                <li data-hash="{{ controller.generateHash(doc.name) | raw }}"
+                                    data-id="{{ doc.id }}"
+                                    data-text="{{ doc.description | json_encode() }}">{{ doc.name | raw }}</li>
+
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-5 col-sm-offset-1 col-xs-12">
+                <span class="message message-ok">{{ message_ok }}</span><span class="message message-err">{{ message_err }}</span>
+                <h3 class="create-btn-title">Редактирование документа</h3>
+
+                {% set form = activeForm.begin() %}
+                {{ form.field(model, 'id').hiddenInput().label(false) | raw }}
+                {{ form.field(model, 'hash').hiddenInput().label(false) | raw }}
+                {{ form.field(model, 'name') | raw }}
+                {{ form.field(model, 'description').textArea({'rows': 7, 'cols': 20}).label('Описание') | raw }}
+                <div class="form-group document_files hidden">
+                    <label for="" class="control-label">Прикреплённые к документу файлы:</label>
+                    <div class="form-group uploaded"></div>
+                    <div class="row"></div>
+                </div>
+                {{ form.field(model, 'uploadFiles[]').fileInput({'multiple': true, 'accept': '*'}) | raw }}
+                {{ html.submitButton('Изменить', {'class': 'btn btn-info'}) | raw }}
+                {{ html.button('Удалить', {'class': 'btn btn-danger btn-del-doc'}) | raw }}
+                {{ void(activeForm.end()) }}
+            </div>
+
+
+    </div>
+</div>
+
+<script language="JavaScript">var attachments = ({{ attach | raw}});</script>

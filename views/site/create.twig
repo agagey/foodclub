@@ -1,0 +1,26 @@
+<div class="site-index">
+
+    <div class="jumbotron">
+
+        <h2>Форма добавления нового документа</h2>
+
+    </div>
+
+    <div class="body-content">
+
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>Новый документ</h2>
+
+                {% set form = activeForm.begin() %}
+                {{ form.field(model, 'name') | raw }}
+                {{ form.field(model, 'description').textArea({'rows': 7, 'cols': 20}).label('Описание') | raw }}
+                {{ form.field(model, 'uploadFiles[]').fileInput({'multiple': true, 'accept': '*'}) | raw }}
+                {{ html.submitButton('Создать', {'class': 'btn btn-primary'}) | raw }}
+                {{ void(activeForm.end()) }}
+
+            </div>
+        </div>
+
+    </div>
+</div>
